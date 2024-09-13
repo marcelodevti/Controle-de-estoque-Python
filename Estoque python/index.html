@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Estoque</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Sistema de Estoque</h1>
+
+    <!-- Lista de Produtos -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.id }}</td>
+                <td>{{ produto.nome }}</td>
+                <td>{{ produto.quantidade }}</td>
+                <td>
+                    <form action="/update/{{ produto.id }}" method="POST">
+                        <input type="text" name="nome" value="{{ produto.nome }}" required>
+                        <input type="number" name="quantidade" value="{{ produto.quantidade }}" required>
+                        <button type="submit">Atualizar</button>
+                    </form>
+                    <a href="/delete/{{ produto.id }}">Deletar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Formulário de Adição de Produto -->
+    <h2>Adicionar Produto</h2>
+    <form action="/add" method="POST">
+        <input type="text" name="nome" placeholder="Nome do Produto" required>
+        <input type="number" name="quantidade" placeholder="Quantidade" required>
+        <button type="submit">Adicionar</button>
+    </form>
+</body>
+</html>
